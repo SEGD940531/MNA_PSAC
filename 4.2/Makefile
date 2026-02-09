@@ -59,6 +59,8 @@ define REQUIRE_TC
 	fi
 endef
 
+
+
 # --------------------------------------------
 # Run single test case (with logs timestamp)
 # --------------------------------------------
@@ -180,8 +182,15 @@ test-all-log: test-p1-log test-p2-log test-p3-log
 # Lint
 # --------------------------------------------
 
-lint: install
+lint: install lint-run
+
+lint-run:
 	$(PY) -m pylint $(P1) $(P2) $(P3)
+
+lint-run:
+	PYTHONPATH=$(P1)/source $(PY) -m pylint $(P1)/source $(P1)/tests
+	PYTHONPATH=$(P2)/source $(PY) -m pylint $(P2)/source $(P2)/tests
+	PYTHONPATH=$(P3)/source $(PY) -m pylint $(P3)/source $(P3)/tests
 
 # --------------------------------------------
 # Clean

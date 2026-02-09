@@ -80,4 +80,47 @@ Este repositorio contiene tres programas (P1, P2, P3) ejecutados desde la raíz 
   - [`4.2/P3/logs/`](./P3/logs/)
 - Tests con log:
   - `make test-p3-log`
-  - Evidencia: [`4.2/P3/test_logs/`](./P3/test_logs/)
+
+---
+
+## Evidencia de Calidad de Código (PyLint)
+
+Se ejecutó análisis estático de código usando **PyLint** desde la raíz del proyecto `4.2/`.
+
+### Comando utilizado
+```
+make lint-run
+```
+
+### Resultado de ejecución
+
+#### P1
+- Score obtenido: **10.00 / 10**
+- Comando ejecutado:
+```
+PYTHONPATH=P1/source .venv/bin/python -m pylint P1/source P1/tests
+```
+
+#### P2
+- Score obtenido: **9.72 / 10**
+- Observaciones menores:
+  - Missing final newline en algunos archivos
+  - Too many local variables en `convertNumbers.py`
+
+- Comando ejecutado:
+```
+PYTHONPATH=P2/source .venv/bin/python -m pylint P2/source P2/tests
+```
+
+### Interpretación
+- El proyecto cumple en gran medida con las reglas de estilo PEP8.
+- Las advertencias detectadas no afectan la ejecución funcional del sistema.
+- La calificación general indica alta calidad de código.
+
+### Archivos analizados
+- [`4.2/P1/source/`](./P1/source/)
+- [`4.2/P1/tests/`](./P1/tests/)
+- [`4.2/P2/source/`](./P2/source/)
+- [`4.2/P2/tests/`](./P2/tests/)
+- [`4.2/P3/source/`](./P3/source/)
+- [`4.2/P3/tests/`](./P3/tests/)
