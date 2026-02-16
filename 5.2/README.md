@@ -1,153 +1,176 @@
-# Tec de Monterrey | Maestría en Inteligencia Artificial (MNA)
-## Pruebas de software y aseguramiento de la calidad (Gpo 10)
+
+# Actividad 5.2 - Compute Sales
+
+**Tec de Monterrey | Maestría en Inteligencia Artificial (MNA)**  
+Pruebas de software y aseguramiento de la calidad (Gpo 10)  
 
 David A. Serrano Garcia  
-**Matrícula:** A01795935  
-**Correo:** a01795935@tec.mx  
+Matrícula: A01795935  
+Correo: a01795935@tec.mx  
 
 ---
 
-# Actividad 5.2 - Compute Sales (Evidencia de ejecución)
+## Estrategia de desarrollo
 
-Este repositorio contiene el programa **computeSales.py** para calcular el total de ventas a partir de:
-1) Un catálogo de precios (JSON)  
-2) Un registro de ventas (JSON)
+> A continuación describo de forma breve la estrategia de desarrollo que seguí, la cual resume el flujo de trabajo aplicado en este proyecto.
 
-La ejecución se realiza desde la raíz del proyecto `5.2/` usando el `Makefile`.
+El desarrollo se realizó de forma incremental:
+
+1. **Estructura base del proyecto**  
+   Primero se definió la estructura del proyecto ([`src/`](./src), [`tests/`](./tests), [`logs/`](./logs), [`data/`](./data), [`output/`](./output)) junto con el [`Makefile`](./Makefile) para poder ejecutar todo de forma consistente.
+
+2. **Pruebas antes de la implementación**  
+   Se crearon los tests en [`tests/test_compute_sales.py`](./tests/test_compute_sales.py) utilizando los resultados esperados en [`tests/expected/Results.txt`](./tests/expected/Results.txt), aun sin tener la lógica completa, para definir el comportamiento esperado.  
+   En los logs de pruebas ([`logs/test/`](./logs/test/)) se pueden ver ejecuciones iniciales con tests fallidos y posteriormente ejecuciones exitosas conforme se fue implementando la lógica.
+
+3. **Lógica desacoplada en paquete**  
+   La lógica se implementó en el paquete [`src/compute_sales/`](./src/compute_sales/) (principalmente en [`main.py`](./src/compute_sales/main.py)) como función independiente.  
+   La idea de esta separación fue aislar la lógica core del programa del manejo de CLI y de archivos, de modo que la lógica sea reutilizable, fácil de probar y no dependa de la entrada/salida.
+
+4. **Implementación del CLI**  
+   Se creó el entrypoint [`src/computeSales.py`](./src/computeSales.py), encargado de la lectura de archivos, validación de datos, medición de tiempo y generación del archivo de resultados [`output/SalesResults.txt`](./output/SalesResults.txt).
+
+5. **Calidad de código (PEP8)**  
+   Se utilizaron herramientas como `flake8`, registrando resultados en [`logs/lint/`](./logs/lint/) y ajustando el código con base en sus reportes.
+
+6. **Registro de ejecución**  
+   Todas las ejecuciones generan evidencia en logs:
+   - Ejecución del programa: [`logs/run/`](./logs/run/)  
+   - Pruebas: [`logs/test/`](./logs/test/)  
+   - Análisis estático: [`logs/lint/`](./logs/lint/)
 
 ---
 
-## Estructura del proyecto
-- Raíz del proyecto: [`5.2/`](./)
-- Makefile: [`5.2/Makefile`](./Makefile)
+## Descripción
 
-### Código fuente
-- CLI (requerido por la actividad): [`5.2/src/computeSales.py`](./src/computeSales.py)
-- Paquete con lógica pura: [`5.2/src/compute_sales/`](./src/compute_sales/)
-  - Lógica de cálculo: [`5.2/src/compute_sales/main.py`](./src/compute_sales/main.py)
-  - Export público: [`5.2/src/compute_sales/__init__.py`](./src/compute_sales/__init__.py)
+Programa CLI en Python que calcula el total de ventas a partir de:
 
-### Datos de entrada (incluidos para la evidencia)
-- Catálogo de precios: [`5.2/data/priceCatalogue.json`](./data/priceCatalogue.json)
-- Registro de ventas: [`5.2/data/salesRecord.json`](./data/salesRecord.json)
+- Catálogo de precios (JSON)
+- Registro de ventas (JSON)
 
-### Evidencia de resultados
-- Archivo generado (Req 2): [`5.2/output/SalesResults.txt`](./output/SalesResults.txt)
+Genera salida en consola y en archivo.
 
-### Evidencia de ejecución (logs)
-- Logs de ejecución del programa: [`5.2/logs/run/`](./logs/run/)
-  - Patrón: `run_YYYYMMDD_HHMMSS.stdout.log` y `run_YYYYMMDD_HHMMSS.stderr.log`
-- Logs de pruebas unitarias: [`5.2/logs/test/`](./logs/test/)
-  - Patrón: `test_YYYYMMDD_HHMMSS.stdout.log` y `test_YYYYMMDD_HHMMSS.stderr.log`
+---
 
-### Pruebas
-- Suite de pruebas: [`5.2/tests/test_compute_sales.py`](./tests/test_compute_sales.py)
-- Entradas de casos de prueba:
-  - [`5.2/tests/fixtures/valid/TC1/`](./tests/fixtures/valid/TC1/)
-  - [`5.2/tests/fixtures/valid/TC2/`](./tests/fixtures/valid/TC2/)
-  - [`5.2/tests/fixtures/valid/TC3/`](./tests/fixtures/valid/TC3/)
-- Totales esperados (oracle): [`5.2/tests/expected/Results.txt`](./tests/expected/Results.txt)
+## Estructura
+
+```
+5.2/
+├── Makefile
+├── src/
+│   ├── computeSales.py
+│   └── compute_sales/
+│       ├── __init__.py
+│       └── main.py
+├── data/
+│   ├── priceCatalogue.json
+│   └── salesRecord.json
+├── output/
+│   └── SalesResults.txt
+├── logs/
+│   ├── run/
+│   ├── test/
+│   └── lint/
+└── tests/
+    ├── test_compute_sales.py
+    ├── fixtures/
+    └── expected/
+```
+
+---
+
+## Uso
+
+```
+python src/computeSales.py data/priceCatalogue.json data/salesRecord.json
+```
+
+---
+
+## Makefile
+
+Instalar dependencias:
+
+```
+make install
+```
+
+Ejecutar programa:
+
+```
+make run
+```
+
+Ejecutar pruebas:
+
+```
+make test
+```
+
+Análisis estático:
+
+```
+make lint
+```
 
 ---
 
 ## Requisitos cubiertos
 
-### Req 1. Invocación por línea de comandos con dos archivos
-El programa se ejecuta con:
-```bash
-python src/computeSales.py data/priceCatalogue.json data/salesRecord.json
+1. CLI con dos archivos  
+2. Salida en consola y archivo  
+3. Manejo de errores sin detener ejecución  
+4. Entry point: `computeSales.py`  
+5. Formato de ejecución estándar  
+6. Escalabilidad O(n) con búsqueda O(1)  
+7. Medición de tiempo de ejecución  
+8. Cumplimiento PEP8  
 
-Req 2. Cálculo total y salida a consola y archivo SalesResults.txt
-	•	Imprime en consola un reporte legible para el usuario.
-	•	Genera el archivo:
-	•	output/SalesResults.txt￼
+---
 
-Req 3. Manejo de datos inválidos sin detener ejecución
-	•	Errores y advertencias se imprimen en stderr con prefijos:
-	•	[ERROR] ...
-	•	[WARN] ...
-	•	La ejecución continúa y el programa genera salida con lo que sea posible procesar.
+## Logs
 
-Req 4. Nombre del programa
-	•	El entrypoint requerido es: src/computeSales.py￼
+- Ejecución: `logs/run/`
+- Tests: `logs/test/`
+- Lint: `logs/lint/`
 
-Req 5. Formato mínimo de invocación
+Formato:
 
-python computeSales.py priceCatalogue.json salesRecord.json
+```
+*_YYYYMMDD_HHMMSS.stdout.log
+*_YYYYMMDD_HHMMSS.stderr.log
+```
 
-En este repositorio:
+---
 
-python src/computeSales.py data/priceCatalogue.json data/salesRecord.json
+## Pruebas
 
-Req 6. Escalabilidad (cientos a miles de items)
-	•	La lógica de cálculo usa un mapa title -> price para búsqueda O(1) por producto.
-	•	El cálculo es lineal respecto al número de registros de ventas.
+- Tests unitarios en `tests/`
+- Datos en `tests/fixtures/`
+- Resultados esperados en `tests/expected/`
 
-Req 7. Tiempo transcurrido
-	•	El reporte incluye el tiempo de ejecución:
-	•	En consola
-	•	En output/SalesResults.txt
+---
 
-Req 8. PEP8
-	•	Se incluye flake8 y black en el flujo del repositorio.
-	•	El Makefile contiene targets para lint y format (si están habilitados en tu versión final).
+## Calidad de código
 
-⸻
+Herramientas:
 
-Cómo ejecutar
+- flake8
+- pylint
+- black
 
-1) Instalar dependencias
+Resultado:
 
-make install
+- Score pylint: ~9+
+- Sin errores críticos
 
-Esto crea .venv/ e instala:
-	•	pytest
-	•	flake8
-	•	black
+---
 
-2) Ejecutar el programa (genera logs)
+## Diseño
 
-make run
+- `compute_sales`: lógica pura (testable)
+- `computeSales.py`: CLI, IO, validación, logging
+- Manejo defensivo de errores
+- Reporte claro y legible
 
-Evidencia:
-	•	Resultado final: output/SalesResults.txt￼
-	•	Logs:
-	•	logs/run/￼
-
-3) Ejecutar tests (genera logs)
-
-make test
-
-Evidencia:
-	•	Logs:
-	•	logs/test/￼
-
-⸻
-
-Evidencia de ejecución incluida
-
-Ejecución del programa
-	•	Logs exitosos:
-	•	logs/run/run_20260215_175723.stdout.log￼
-	•	logs/run/run_20260215_175723.stderr.log￼
-	•	Ejemplo de ejecución con errores (archivos no encontrados):
-	•	logs/run/run_20260215_175504.stdout.log￼
-	•	logs/run/run_20260215_175504.stderr.log￼
-
-Ejecución de pruebas
-	•	Ejecución exitosa:
-	•	logs/test/test_20260215_175119.stdout.log￼
-	•	logs/test/test_20260215_175119.stderr.log￼
-
-⸻
-
-Notas de diseño
-	•	Separación de responsabilidades:
-	•	compute_sales contiene solo lógica de negocio (probada por unit tests).
-	•	computeSales.py implementa el CLI: lectura de archivos, validación defensiva, cronometraje, reporte y escritura del archivo.
-	•	Formato legible:
-	•	Se imprime un reporte con encabezado, rutas de archivos, total, tiempo y sección de warnings cuando aplica.
-
-⸻
-
-
+---
