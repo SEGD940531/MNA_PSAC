@@ -1,0 +1,27 @@
+************* Module computeSales
+src/computeSales.py:58:0: C0301: Line too long (93/88) (line-too-long)
+src/computeSales.py:60:0: C0301: Line too long (93/88) (line-too-long)
+src/computeSales.py:69:0: C0301: Line too long (96/88) (line-too-long)
+src/computeSales.py:88:0: C0301: Line too long (93/88) (line-too-long)
+src/computeSales.py:89:0: C0301: Line too long (93/88) (line-too-long)
+src/computeSales.py:91:0: C0301: Line too long (94/88) (line-too-long)
+src/computeSales.py:99:0: C0301: Line too long (89/88) (line-too-long)
+src/computeSales.py:144:0: C0301: Line too long (94/88) (line-too-long)
+src/computeSales.py:187:0: C0301: Line too long (94/88) (line-too-long)
+src/computeSales.py:192:0: C0304: Final newline missing (missing-final-newline)
+src/computeSales.py:13:0: W0611: Unused Dict imported from typing (unused-import)
+************* Module compute_sales.__init__
+src/compute_sales/__init__.py:1:0: C0304: Final newline missing (missing-final-newline)
+************* Module compute_sales.main
+src/compute_sales/main.py:96:0: C0304: Final newline missing (missing-final-newline)
+src/compute_sales/main.py:14:11: W0718: Catching too general exception Exception (broad-exception-caught)
+************* Module test_compute_sales
+tests/test_compute_sales.py:30:0: C0301: Line too long (104/88) (line-too-long)
+tests/test_compute_sales.py:31:0: C0301: Line too long (104/88) (line-too-long)
+tests/test_compute_sales.py:32:0: C0301: Line too long (104/88) (line-too-long)
+tests/test_compute_sales.py:36:0: C0301: Line too long (92/88) (line-too-long)
+tests/test_compute_sales.py:42:0: C0304: Final newline missing (missing-final-newline)
+
+------------------------------------------------------------------
+Your code has been rated at 9.01/10 (previous run: 9.72/10, -0.72)
+
