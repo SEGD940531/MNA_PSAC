@@ -90,7 +90,7 @@ def compute_sales(prices: Any, sales: Any) -> str:
             continue
 
         qty = _as_decimal(row.get("Quantity"))
-        if qty <= 0:
+        if qty == 0:
             continue
 
         total += price_map[product] * qty

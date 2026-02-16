@@ -1,0 +1,57 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.0, pytest-9.0.2, pluggy-1.6.0 -- /Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MAN_A02234_Pruebas-de-software-y-aseguramiento-de-la-calidad_A/5.2/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MAN_A02234_Pruebas-de-software-y-aseguramiento-de-la-calidad_A/5.2
+collecting ... collected 3 items
+
+tests/test_compute_sales.py::test_tc_totals_match_expected[TC1] PASSED   [ 33%]
+tests/test_compute_sales.py::test_tc_totals_match_expected[TC2] FAILED   [ 66%]
+tests/test_compute_sales.py::test_tc_totals_match_expected[TC3] FAILED   [100%]
+
+=================================== FAILURES ===================================
+______________________ test_tc_totals_match_expected[TC2] ______________________
+
+tc_name = 'TC2', prices_path = 'tests/fixtures/valid/TC1/TC1.ProductList.json'
+sales_path = 'tests/fixtures/valid/TC2/TC2.Sales.json'
+
+    @pytest.mark.parametrize("tc_name,prices_path,sales_path", CASES, ids=[c[0] for c in CASES])
+    def test_tc_totals_match_expected(tc_name: str, prices_path: str, sales_path: str):
+        prices = _load_json(prices_path)
+        sales = _load_json(sales_path)
+    
+        result = compute_sales(prices, sales).strip()
+>       assert result == EXPECTED[tc_name]
+E       AssertionError: assert '169478.22' == '166568.23'
+E         
+E         - 166568.23
+E         + 169478.22
+
+tests/test_compute_sales.py:42: AssertionError
+______________________ test_tc_totals_match_expected[TC3] ______________________
+
+tc_name = 'TC3', prices_path = 'tests/fixtures/valid/TC1/TC1.ProductList.json'
+sales_path = 'tests/fixtures/valid/TC3/TC3.Sales.json'
+
+    @pytest.mark.parametrize("tc_name,prices_path,sales_path", CASES, ids=[c[0] for c in CASES])
+    def test_tc_totals_match_expected(tc_name: str, prices_path: str, sales_path: str):
+        prices = _load_json(prices_path)
+        sales = _load_json(sales_path)
+    
+        result = compute_sales(prices, sales).strip()
+>       assert result == EXPECTED[tc_name]
+E       AssertionError: assert '168145.36' == '165235.37'
+E         
+E         - 165235.37
+E         + 168145.36
+
+tests/test_compute_sales.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_compute_sales.py::test_tc_totals_match_expected[TC2] - AssertionError: assert '169478.22' == '166568.23'
+  
+  - 166568.23
+  + 169478.22
+FAILED tests/test_compute_sales.py::test_tc_totals_match_expected[TC3] - AssertionError: assert '168145.36' == '165235.37'
+  
+  - 165235.37
+  + 168145.36
+========================= 2 failed, 1 passed in 0.03s ==========================

@@ -1,0 +1,11 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.0, pytest-9.0.2, pluggy-1.6.0 -- /Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MAN_A02234_Pruebas-de-software-y-aseguramiento-de-la-calidad_A/5.2/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MAN_A02234_Pruebas-de-software-y-aseguramiento-de-la-calidad_A/5.2
+collecting ... collected 3 items
+
+tests/test_compute_sales.py::test_tc_totals_match_expected[TC1] PASSED   [ 33%]
+tests/test_compute_sales.py::test_tc_totals_match_expected[TC2] PASSED   [ 66%]
+tests/test_compute_sales.py::test_tc_totals_match_expected[TC3] PASSED   [100%]
+
+============================== 3 passed in 0.02s ===============================
