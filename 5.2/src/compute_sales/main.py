@@ -107,10 +107,10 @@ def main():
     price_file = sys.argv[1]
     sales_file = sys.argv[2]
 
-    with open(price_file) as f:
+    with open(price_file, "r", encoding="utf-8") as f:
         prices = json.load(f)
 
-    with open(sales_file) as f:
+    with open(sales_file, "r", encoding="utf-8") as f:
         sales = json.load(f)
 
     result = compute_sales(prices, sales)
