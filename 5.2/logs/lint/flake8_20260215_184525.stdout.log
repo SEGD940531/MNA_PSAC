@@ -1,0 +1,2 @@
+src/compute_sales/__init__.py:1:1: F401 '.main.compute_sales' imported but unused
+tests/test_compute_sales.py:54:39: W292 no newline at end of file
