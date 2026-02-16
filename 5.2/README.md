@@ -7,120 +7,147 @@ David A. Serrano Garcia
 
 ---
 
-# Actividad 4.2 - Evidencia de ejecución (P1, P2, P3)
+# Actividad 5.2 - Compute Sales (Evidencia de ejecución)
 
-Este repositorio contiene tres programas (P1, P2, P3) ejecutados desde la raíz `4.2/` usando el `Makefile`.
+Este repositorio contiene el programa **computeSales.py** para calcular el total de ventas a partir de:
+1) Un catálogo de precios (JSON)  
+2) Un registro de ventas (JSON)
 
-## Estructura
-- Raíz del proyecto: [`4.2/`](./)
-- Makefile: [`4.2/Makefile`](./Makefile)
-
-### P1 - Statistics
-- Código: [`4.2/P1/source/computeStatistics.py`](./P1/source/computeStatistics.py)
-- Datos de entrada: [`4.2/P1/data/`](./P1/data/)
-- Resultados finales: [`4.2/P1/results/StatisticsResults.txt`](./P1/results/StatisticsResults.txt)
-- Logs de ejecución (por TC): [`4.2/P1/logs/`](./P1/logs/)
-  - Patrón: `TC*_YYYYMMDD_HHMMSS.stdout.log` y `TC*_YYYYMMDD_HHMMSS.stderr.log`
-- Evidencia de tests: [`4.2/P1/test_logs/`](./P1/test_logs/)
-
-### P2 - Converter
-- Código: [`4.2/P2/source/convertNumbers.py`](./P2/source/convertNumbers.py)
-- Datos de entrada: [`4.2/P2/data/`](./P2/data/)
-- Resultados finales: [`4.2/P2/results/ConvertionResults.txt`](./P2/results/ConvertionResults.txt)
-- Resultados por caso:
-  - [`TC1.Results.txt`](./P2/results/TC1.Results.txt), [`TC2.Results.txt`](./P2/results/TC2.Results.txt), [`TC3.Results.txt`](./P2/results/TC3.Results.txt), [`TC4.Results.txt`](./P2/results/TC4.Results.txt)
-- Logs de ejecución (por TC): [`4.2/P2/logs/`](./P2/logs/)
-- Evidencia de tests: [`4.2/P2/test_logs/`](./P2/test_logs/)
-
-### P3 - Word Count
-- Código: [`4.2/P3/source/wordCount.py`](./P3/source/wordCount.py)
-- Datos de entrada: [`4.2/P3/data/`](./P3/data/)
-- Resultados finales: [`4.2/P3/results/WordCountResults.txt`](./P3/results/WordCountResults.txt)
-- Resultados por caso:
-  - [`TC1.Results.txt`](./P3/results/TC1.Results.txt), [`TC2.Results.txt`](./P3/results/TC2.Results.txt), [`TC3.Results.txt`](./P3/results/TC3.Results.txt), [`TC4.Results.txt`](./P3/results/TC4.Results.txt), [`TC5.Results.txt`](./P3/results/TC5.Results.txt)
-- Logs de ejecución (por TC): [`4.2/P3/logs/`](./P3/logs/)
-- Evidencia de tests: [`4.2/P3/test_logs/`](./P3/test_logs/)
+La ejecución se realiza desde la raíz del proyecto `5.2/` usando el `Makefile`.
 
 ---
 
-## Resumen de ejecución
+## Estructura del proyecto
+- Raíz del proyecto: [`5.2/`](./)
+- Makefile: [`5.2/Makefile`](./Makefile)
 
-### P1 (Statistics)
-- Ejecutar todos los casos (`TC1` a `TC7`) desde la raíz:
-  - `make run-p1-all`
-- Evidencia final:
-  - [`4.2/P1/results/StatisticsResults.txt`](./P1/results/StatisticsResults.txt)
-- Logs:
-  - [`4.2/P1/logs/`](./P1/logs/)
-- Tests con log:
-  - `make test-p1-log`
-  - Evidencia: [`4.2/P1/test_logs/`](./P1/test_logs/)
+### Código fuente
+- CLI (requerido por la actividad): [`5.2/src/computeSales.py`](./src/computeSales.py)
+- Paquete con lógica pura: [`5.2/src/compute_sales/`](./src/compute_sales/)
+  - Lógica de cálculo: [`5.2/src/compute_sales/main.py`](./src/compute_sales/main.py)
+  - Export público: [`5.2/src/compute_sales/__init__.py`](./src/compute_sales/__init__.py)
 
-### P2 (Converter)
-- Ejecutar todos los casos (`TC1` a `TC4`) desde la raíz:
-  - `make run-p2-all`
-- Evidencia final:
-  - [`4.2/P2/results/ConvertionResults.txt`](./P2/results/ConvertionResults.txt)
-- Evidencia por caso:
-  - [`4.2/P2/results/`](./P2/results/)
-- Logs:
-  - [`4.2/P2/logs/`](./P2/logs/)
-- Tests con log:
-  - `make test-p2-log`
-  - Evidencia: [`4.2/P2/test_logs/`](./P2/test_logs/)
+### Datos de entrada (incluidos para la evidencia)
+- Catálogo de precios: [`5.2/data/priceCatalogue.json`](./data/priceCatalogue.json)
+- Registro de ventas: [`5.2/data/salesRecord.json`](./data/salesRecord.json)
 
-### P3 (Word Count)
-- Ejecutar todos los casos (`TC1` a `TC5`) desde la raíz:
-  - `make run-p3-all`
-- Evidencia final:
-  - [`4.2/P3/results/WordCountResults.txt`](./P3/results/WordCountResults.txt)
-- Evidencia por caso:
-  - [`4.2/P3/results/`](./P3/results/)
-- Logs:
-  - [`4.2/P3/logs/`](./P3/logs/)
-- Tests con log:
-  - `make test-p3-log`
+### Evidencia de resultados
+- Archivo generado (Req 2): [`5.2/output/SalesResults.txt`](./output/SalesResults.txt)
+
+### Evidencia de ejecución (logs)
+- Logs de ejecución del programa: [`5.2/logs/run/`](./logs/run/)
+  - Patrón: `run_YYYYMMDD_HHMMSS.stdout.log` y `run_YYYYMMDD_HHMMSS.stderr.log`
+- Logs de pruebas unitarias: [`5.2/logs/test/`](./logs/test/)
+  - Patrón: `test_YYYYMMDD_HHMMSS.stdout.log` y `test_YYYYMMDD_HHMMSS.stderr.log`
+
+### Pruebas
+- Suite de pruebas: [`5.2/tests/test_compute_sales.py`](./tests/test_compute_sales.py)
+- Entradas de casos de prueba:
+  - [`5.2/tests/fixtures/valid/TC1/`](./tests/fixtures/valid/TC1/)
+  - [`5.2/tests/fixtures/valid/TC2/`](./tests/fixtures/valid/TC2/)
+  - [`5.2/tests/fixtures/valid/TC3/`](./tests/fixtures/valid/TC3/)
+- Totales esperados (oracle): [`5.2/tests/expected/Results.txt`](./tests/expected/Results.txt)
 
 ---
 
-## Evidencia de Calidad de Código (PyLint)
+## Requisitos cubiertos
 
-Se ejecutó análisis estático de código usando **PyLint** desde la raíz del proyecto `4.2/`.
+### Req 1. Invocación por línea de comandos con dos archivos
+El programa se ejecuta con:
+```bash
+python src/computeSales.py data/priceCatalogue.json data/salesRecord.json
 
-### Comando utilizado
-```
-make lint-run
-```
+Req 2. Cálculo total y salida a consola y archivo SalesResults.txt
+	•	Imprime en consola un reporte legible para el usuario.
+	•	Genera el archivo:
+	•	output/SalesResults.txt￼
 
-### Resultado de ejecución
+Req 3. Manejo de datos inválidos sin detener ejecución
+	•	Errores y advertencias se imprimen en stderr con prefijos:
+	•	[ERROR] ...
+	•	[WARN] ...
+	•	La ejecución continúa y el programa genera salida con lo que sea posible procesar.
 
-#### P1
-- Score obtenido: **10.00 / 10**
-- Comando ejecutado:
-```
-PYTHONPATH=P1/source .venv/bin/python -m pylint P1/source P1/tests
-```
+Req 4. Nombre del programa
+	•	El entrypoint requerido es: src/computeSales.py￼
 
-#### P2
-- Score obtenido: **9.72 / 10**
-- Observaciones menores:
-  - Missing final newline en algunos archivos
-  - Too many local variables en `convertNumbers.py`
+Req 5. Formato mínimo de invocación
 
-- Comando ejecutado:
-```
-PYTHONPATH=P2/source .venv/bin/python -m pylint P2/source P2/tests
-```
+python computeSales.py priceCatalogue.json salesRecord.json
 
-### Interpretación
-- El proyecto cumple en gran medida con las reglas de estilo PEP8.
-- Las advertencias detectadas no afectan la ejecución funcional del sistema.
-- La calificación general indica alta calidad de código.
+En este repositorio:
 
-### Archivos analizados
-- [`4.2/P1/source/`](./P1/source/)
-- [`4.2/P1/tests/`](./P1/tests/)
-- [`4.2/P2/source/`](./P2/source/)
-- [`4.2/P2/tests/`](./P2/tests/)
-- [`4.2/P3/source/`](./P3/source/)
-- [`4.2/P3/tests/`](./P3/tests/)
+python src/computeSales.py data/priceCatalogue.json data/salesRecord.json
+
+Req 6. Escalabilidad (cientos a miles de items)
+	•	La lógica de cálculo usa un mapa title -> price para búsqueda O(1) por producto.
+	•	El cálculo es lineal respecto al número de registros de ventas.
+
+Req 7. Tiempo transcurrido
+	•	El reporte incluye el tiempo de ejecución:
+	•	En consola
+	•	En output/SalesResults.txt
+
+Req 8. PEP8
+	•	Se incluye flake8 y black en el flujo del repositorio.
+	•	El Makefile contiene targets para lint y format (si están habilitados en tu versión final).
+
+⸻
+
+Cómo ejecutar
+
+1) Instalar dependencias
+
+make install
+
+Esto crea .venv/ e instala:
+	•	pytest
+	•	flake8
+	•	black
+
+2) Ejecutar el programa (genera logs)
+
+make run
+
+Evidencia:
+	•	Resultado final: output/SalesResults.txt￼
+	•	Logs:
+	•	logs/run/￼
+
+3) Ejecutar tests (genera logs)
+
+make test
+
+Evidencia:
+	•	Logs:
+	•	logs/test/￼
+
+⸻
+
+Evidencia de ejecución incluida
+
+Ejecución del programa
+	•	Logs exitosos:
+	•	logs/run/run_20260215_175723.stdout.log￼
+	•	logs/run/run_20260215_175723.stderr.log￼
+	•	Ejemplo de ejecución con errores (archivos no encontrados):
+	•	logs/run/run_20260215_175504.stdout.log￼
+	•	logs/run/run_20260215_175504.stderr.log￼
+
+Ejecución de pruebas
+	•	Ejecución exitosa:
+	•	logs/test/test_20260215_175119.stdout.log￼
+	•	logs/test/test_20260215_175119.stderr.log￼
+
+⸻
+
+Notas de diseño
+	•	Separación de responsabilidades:
+	•	compute_sales contiene solo lógica de negocio (probada por unit tests).
+	•	computeSales.py implementa el CLI: lectura de archivos, validación defensiva, cronometraje, reporte y escritura del archivo.
+	•	Formato legible:
+	•	Se imprime un reporte con encabezado, rutas de archivos, total, tiempo y sección de warnings cuando aplica.
+
+⸻
+
+
