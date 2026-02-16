@@ -1,0 +1,9 @@
+Compute Sales Results
+====================
+Price catalogue: data/priceCatalogue.json
+Sales record:    data/salesRecord.json
+
+TOTAL: 2481.86
+Elapsed time: 0.000529 seconds
+
+Results file: output/SalesResults.txt
