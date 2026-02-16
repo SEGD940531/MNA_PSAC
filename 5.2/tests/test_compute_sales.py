@@ -27,9 +27,21 @@ def _load_expected_totals(path: str) -> dict:
 EXPECTED = _load_expected_totals("tests/expected/Results.txt")
 
 CASES = [
-    ("TC1", "tests/fixtures/valid/TC1/TC1.ProductList.json", "tests/fixtures/valid/TC1/TC1.Sales.json"),
-    ("TC2", "tests/fixtures/valid/TC1/TC1.ProductList.json", "tests/fixtures/valid/TC2/TC2.Sales.json"),
-    ("TC3", "tests/fixtures/valid/TC1/TC1.ProductList.json", "tests/fixtures/valid/TC3/TC3.Sales.json"),
+    (
+        "TC1",
+        "tests/fixtures/valid/TC1/TC1.ProductList.json",
+        "tests/fixtures/valid/TC1/TC1.Sales.json",
+    ),
+    (
+        "TC2",
+        "tests/fixtures/valid/TC1/TC1.ProductList.json",
+        "tests/fixtures/valid/TC2/TC2.Sales.json",
+    ),
+    (
+        "TC3",
+        "tests/fixtures/valid/TC1/TC1.ProductList.json",
+        "tests/fixtures/valid/TC3/TC3.Sales.json",
+    ),
 ]
 
 
