@@ -1,7 +1,5 @@
-# main.py
+# compute_sales/main.py
 
-import json
-import sys
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Any, Dict, Iterable, List
 
@@ -21,17 +19,16 @@ def _build_price_map(prices: Any) -> Dict[str, Decimal]:
     """
     Builds a map: product_title -> price (Decimal)
 
-    Expected input for tests:
+    Expected input:
       prices = [ { "title": "...", "price": 28.1, ... }, ... ]
 
-    This function is defensive and tries to handle alternative shapes if needed.
+    Defensive: supports common wrapper keys if `prices` is a dict.
     """
     items: Iterable[dict]
 
     if isinstance(prices, list):
         items = prices
     elif isinstance(prices, dict):
-        # Try common wrappers (if your assignment uses them)
         for key in ("products", "ProductList", "items", "data"):
             if isinstance(prices.get(key), list):
                 items = prices[key]
@@ -57,19 +54,19 @@ def _build_price_map(prices: Any) -> Dict[str, Decimal]:
 
 def compute_sales(prices: Any, sales: Any) -> str:
     """
-    Computes the total sales amount as a string with 2 decimals.
+    Compute the total sales amount as a string with 2 decimals.
 
     Rules:
-    - Only count lines where Product exists in the catalog
-    - Quantity must be numeric and > 0
-    - Unknown products or invalid quantities are ignored
+    - Only count rows where Product exists in the catalogue
+    - Quantity must be numeric; positive adds, negative subtracts (returns)
+    - Quantity == 0 is ignored
+    - Unknown products or invalid rows are ignored
     """
     price_map = _build_price_map(prices)
 
     if isinstance(sales, list):
         sales_items: List[dict] = sales
     elif isinstance(sales, dict):
-        # Defensive: allow wrapped sales shapes
         for key in ("sales", "Sales", "records", "data", "items"):
             if isinstance(sales.get(key), list):
                 sales_items = sales[key]
@@ -97,25 +94,3 @@ def compute_sales(prices: Any, sales: Any) -> str:
 
     total = total.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
     return f"{total:.2f}"
-
-
-def main():
-    if len(sys.argv) < 3:
-        print("Usage: computeSales <price_file> <sales_file>")
-        sys.exit(1)
-
-    price_file = sys.argv[1]
-    sales_file = sys.argv[2]
-
-    with open(price_file, "r", encoding="utf-8") as f:
-        prices = json.load(f)
-
-    with open(sales_file, "r", encoding="utf-8") as f:
-        sales = json.load(f)
-
-    result = compute_sales(prices, sales)
-    print(result)
-
-
-if __name__ == "__main__":
-    main()
