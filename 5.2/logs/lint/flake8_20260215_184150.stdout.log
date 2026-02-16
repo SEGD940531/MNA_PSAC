@@ -1,0 +1,6 @@
+src/computeSales.py:13:1: F401 'typing.Dict' imported but unused
+src/computeSales.py:192:29: W292 no newline at end of file
+src/compute_sales/__init__.py:1:1: F401 '.main.compute_sales' imported but unused
+src/compute_sales/__init__.py:1:32: W292 no newline at end of file
+src/compute_sales/main.py:96:26: W292 no newline at end of file
+tests/test_compute_sales.py:54:39: W292 no newline at end of file
