@@ -1,0 +1,15 @@
+[ERROR] Invalid JSON in file: /var/folders/_q/ldhs2w893j978t6pmrnsh3740000gn/T/tmpiegejzw7/dummy.json. Expecting value: line 1 column 1 (char 0)
+[ERROR] Invalid JSON in file: /var/folders/_q/ldhs2w893j978t6pmrnsh3740000gn/T/tmp_8z6w54a/test.json. Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
+[ERROR] cancel_reservation: reservation 'missing' not found
+[ERROR] create_hotel failed: Hotel with id 'h1' already exists
+[ERROR] create_hotel failed: Hotel with id 'h1' already exists
+[ERROR] create_hotel failed: Hotel with id 'h1' already exists
+[ERROR] create_hotel failed: Hotel with id 'h1' already exists
+[ERROR] create_hotel failed: Hotel with id 'h1' already exists
+[ERROR] create_hotel failed: Hotel with id 'h1' already exists
+[ERROR] create_hotel failed: Hotel with id 'h1' already exists
+[ERROR] create_hotel failed: Hotel with id 'h1' already exists
+[ERROR] create_hotel failed: Hotel with id 'h1' already exists
+[ERROR] create_hotel failed: Hotel with id 'h1' already exists
+[ERROR] create_hotel failed: Hotel with id 'h1' already exists
+[ERROR] create_hotel failed: Hotel with id 'h1' already exists

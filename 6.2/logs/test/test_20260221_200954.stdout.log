@@ -1,0 +1,7 @@
+[ERROR] Invalid JSON in file: /var/folders/_q/ldhs2w893j978t6pmrnsh3740000gn/T/tmpgxxi4e4k/dummy.json. Expecting value: line 1 column 1 (char 0)
+[ERROR] Invalid JSON in file: /var/folders/_q/ldhs2w893j978t6pmrnsh3740000gn/T/tmpxosm0r6a/test.json. Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
+[ERROR] cancel_reservation: reservation 'missing' not found
+[ERROR] create_reservation failed: customer 'missing' not found
+[ERROR] create_reservation failed: hotel 'missing' not found
+[ERROR] create_reservation failed: not enough available rooms
+[ERROR] Invalid JSON in file: /var/folders/_q/ldhs2w893j978t6pmrnsh3740000gn/T/tmpym18tnf6/store_test/20260221_200956/hotels.json. Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
