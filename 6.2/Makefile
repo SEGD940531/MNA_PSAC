@@ -3,8 +3,11 @@ VENV := .venv
 PY := $(VENV)/bin/python
 PIP := $(PY) -m pip
 
-# CLI entrypoint
-ENTRY := src/cli/main.py
+# Module entrypoint (recommended)
+ENTRY_MODULE := cli.main
+
+# Storage
+STORAGE_DIR ?= storage
 
 # Output and logs
 OUTDIR := output
@@ -15,21 +18,22 @@ LINTLOGDIR := $(LOGDIR)/lint
 
 TIMESTAMP := $(shell date +"%Y%m%d_%H%M%S")
 
-.PHONY: help venv install reinstall logs run test lint pylint format clean
+.PHONY: help venv install reinstall logs store run test lint pylint format clean
 
 help:
 	@echo "Targets:"
-	@echo "  make install     Create venv and install deps"
-	@echo "  make reinstall   Recreate venv from scratch"
-	@echo "  make run         Run CLI (logs saved)"
-	@echo "  make test        Run unit tests with unittest (logs saved)"
-	@echo "  make lint        Run flake8 checks (PEP8)"
-	@echo "  make pylint      Run pylint checks"
-	@echo "  make format      Auto-format with black"
-	@echo "  make clean       Clean environment and generated files"
+	@echo "  make install                 Create venv and install deps"
+	@echo "  make reinstall               Recreate venv from scratch"
+	@echo "  make store                   Create storage dir ($(STORAGE_DIR))"
+	@echo "  make run ARGS='...'          Run CLI (logs saved). If ARGS is empty, runs interactive shell."
+	@echo "  make test                    Run unit tests with unittest (logs saved)"
+	@echo "  make lint                    Run flake8 checks (PEP8)"
+	@echo "  make pylint                  Run pylint checks"
+	@echo "  make format                  Auto-format with black"
+	@echo "  make clean                   Clean environment and generated files"
 
 venv:
-	$(PYTHON) -m venv $(VENV)
+	@test -d $(VENV) || $(PYTHON) -m venv $(VENV)
 
 install: venv
 	$(PIP) install --upgrade pip
@@ -44,14 +48,22 @@ logs:
 	mkdir -p $(RUNLOGDIR)
 	mkdir -p $(LINTLOGDIR)
 
-run: install logs
+store:
+	mkdir -p $(STORAGE_DIR)
+
+# Usage:
+#   make run ARGS="hotels create --id h1 --name 'Hotel A' --location City --total-rooms 3 --available-rooms 3"
+#   make run ARGS="customers create --id c1 --name Alice --email alice@example.com"
+#   make run ARGS="reservations create --customer-id c1 --hotel-id h1 --rooms 2"
+#   make run                         # interactive mode (no ARGS)
+run: install logs store
 	mkdir -p $(OUTDIR)
 	@set -e; \
 	STDOUT="$(RUNLOGDIR)/run_$(TIMESTAMP).stdout.log"; \
 	STDERR="$(RUNLOGDIR)/run_$(TIMESTAMP).stderr.log"; \
-	echo "Running CLI: $(ENTRY)"; \
+	echo "Running CLI: -m $(ENTRY_MODULE) $(ARGS)"; \
 	set +e; \
-	PYTHONPATH=src $(PY) $(ENTRY) > $$STDOUT 2> $$STDERR; \
+	PYTHONPATH=src STORAGE_DIR="$(STORAGE_DIR)" $(PY) -m $(ENTRY_MODULE) $(ARGS) > $$STDOUT 2> $$STDERR; \
 	EC=$$?; \
 	set -e; \
 	echo "Run logs:"; \
@@ -65,7 +77,7 @@ test: install logs
 	STDERR="$(TESTLOGDIR)/test_$(TIMESTAMP).stderr.log"; \
 	echo "Running unittest..."; \
 	set +e; \
-	PYTHONPATH=src $(PY) -m unittest discover -s tests -p "test_*.py" -v > $$STDOUT 2> $$STDERR; \
+	PYTHONPATH=src STORAGE_DIR="$(STORAGE_DIR)" $(PY) -m unittest discover -s tests -p "test_*.py" -v > $$STDOUT 2> $$STDERR; \
 	EC=$$?; \
 	set -e; \
 	echo "Test logs:"; \
@@ -110,4 +122,5 @@ clean:
 	rm -rf $(LOGDIR)
 	rm -rf .pytest_cache
 	rm -rf .coverage htmlcov
+	# rm -rf $(STORAGE_DIR)
 	find . -name "__pycache__" -type d -exec rm -rf {} +
