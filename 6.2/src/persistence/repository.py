@@ -1,11 +1,11 @@
 from __future__ import annotations
 
-from typing import Dict, Generic, List, Optional, Type, TypeVar
+from typing import Any, Generic, TypeVar
 
 from .model import BaseModel
 from .storage_json import JSONStorage
 
-
+Record = dict[str, Any]
 T = TypeVar("T", bound=BaseModel)
 
 
@@ -19,21 +19,21 @@ class Repository(Generic[T]):
     - Validations occur via BaseModel.validate() on create/update and load
     """
 
-    def __init__(self, model_cls: Type[T], file_path: str) -> None:
+    def __init__(self, model_cls: type[T], file_path: str) -> None:
         if not issubclass(model_cls, BaseModel):
             raise ValueError("model_cls must be a subclass of BaseModel")
 
-        self.model_cls = model_cls
-        self.storage = JSONStorage(file_path)
+        self.model_cls: type[T] = model_cls
+        self.storage: JSONStorage = JSONStorage(file_path)
 
-    def _load_all_raw(self) -> List[dict]:
+    def _load_all_raw(self) -> list[Record]:
         return self.storage.read()
 
-    def _dump_all_raw(self, records: List[dict]) -> None:
+    def _dump_all_raw(self, records: list[Record]) -> None:
         self.storage.write(records)
 
-    def _index_by_id(self, records: List[dict]) -> Dict[str, dict]:
-        index: Dict[str, dict] = {}
+    def _index_by_id(self, records: list[Record]) -> dict[str, Record]:
+        index: dict[str, Record] = {}
         for rec in records:
             rec_id = rec.get("id")
             if isinstance(rec_id, str) and rec_id.strip():
@@ -43,9 +43,9 @@ class Repository(Generic[T]):
                 print("[ERROR] Record without valid 'id' found. Skipping.")
         return index
 
-    def all(self) -> List[T]:
+    def all(self) -> list[T]:
         records = self._load_all_raw()
-        items: List[T] = []
+        items: list[T] = []
         for rec in records:
             try:
                 items.append(self.model_cls.from_dict(rec))
@@ -53,7 +53,7 @@ class Repository(Generic[T]):
                 print(f"[ERROR] Invalid record for {self.model_cls.__name__}: {exc}")
         return items
 
-    def get(self, entity_id: str) -> Optional[T]:
+    def get(self, entity_id: str) -> T | None:
         if not isinstance(entity_id, str) or not entity_id.strip():
             raise ValueError("entity_id must be a non-empty string")
 
@@ -101,7 +101,7 @@ class Repository(Generic[T]):
             raise ValueError("entity_id must be a non-empty string")
 
         records = self._load_all_raw()
-        new_records = [rec for rec in records if rec.get("id") != entity_id]
+        new_records: list[Record] = [rec for rec in records if rec.get("id") != entity_id]
 
         # Deleting a non-existing id is not an error: keep execution going.
         self._dump_all_raw(new_records)

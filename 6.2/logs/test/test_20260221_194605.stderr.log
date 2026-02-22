@@ -1,0 +1,23 @@
+test_from_dict_valid (test_persistence_model.TestBaseModel.test_from_dict_valid) ... ok
+test_invalid_id (test_persistence_model.TestBaseModel.test_invalid_id) ... ok
+test_to_dict (test_persistence_model.TestBaseModel.test_to_dict) ... ok
+test_validation_error (test_persistence_model.TestBaseModel.test_validation_error) ... ok
+test_create_and_get (test_persistence_repository.TestRepository.test_create_and_get) ... ok
+test_delete (test_persistence_repository.TestRepository.test_delete) ... ok
+test_delete_non_existing (test_persistence_repository.TestRepository.test_delete_non_existing) ... ok
+test_duplicate_id (test_persistence_repository.TestRepository.test_duplicate_id) ... ok
+test_get_all (test_persistence_repository.TestRepository.test_get_all) ... ok
+test_invalid_data_in_file (test_persistence_repository.TestRepository.test_invalid_data_in_file) ... ok
+test_update (test_persistence_repository.TestRepository.test_update) ... ok
+test_update_non_existing (test_persistence_repository.TestRepository.test_update_non_existing) ... ok
+test_validation_on_create (test_persistence_repository.TestRepository.test_validation_on_create) ... ok
+test_file_not_exists (test_persistence_storage.TestJSONStorage.test_file_not_exists) ... ok
+test_invalid_json_handled (test_persistence_storage.TestJSONStorage.test_invalid_json_handled) ... ok
+test_overwrite_data (test_persistence_storage.TestJSONStorage.test_overwrite_data) ... ok
+test_read_empty_file (test_persistence_storage.TestJSONStorage.test_read_empty_file) ... ok
+test_write_and_read (test_persistence_storage.TestJSONStorage.test_write_and_read) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.008s
+
+OK

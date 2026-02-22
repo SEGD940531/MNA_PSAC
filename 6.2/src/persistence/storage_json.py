@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import json
 import os
-from typing import Any, List
+from typing import Any
+
+Record = dict[str, Any]
 
 
 class JSONStorage:
@@ -17,9 +19,9 @@ class JSONStorage:
     def __init__(self, file_path: str) -> None:
         if not isinstance(file_path, str) or not file_path.strip():
             raise ValueError("file_path must be a non-empty string")
-        self.file_path = file_path
+        self.file_path: str = file_path
 
-    def read(self) -> List[dict]:
+    def read(self) -> list[Record]:
         if not os.path.exists(self.file_path):
             return []
 
@@ -29,6 +31,7 @@ class JSONStorage:
 
             if raw is None:
                 return []
+
             if not isinstance(raw, list):
                 print(
                     f"[ERROR] Invalid data format in file: {self.file_path}. "
@@ -36,15 +39,17 @@ class JSONStorage:
                 )
                 return []
 
-            normalized: List[dict] = []
+            normalized: list[Record] = []
             for idx, item in enumerate(raw):
                 if isinstance(item, dict):
+                    # Best-effort normalization: keep only JSON object records
                     normalized.append(item)
                 else:
                     print(
                         f"[ERROR] Invalid record type at index {idx} in {self.file_path}. "
                         "Expected an object."
                     )
+
             return normalized
 
         except json.JSONDecodeError as exc:
@@ -54,7 +59,7 @@ class JSONStorage:
             print(f"[ERROR] Unable to read file: {self.file_path}. {exc}")
             return []
 
-    def write(self, records: List[dict]) -> None:
+    def write(self, records: list[Record]) -> None:
         if records is None:
             records = []
 

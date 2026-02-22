@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, fields
-from typing import Any, ClassVar, Dict, Type, TypeVar
+from dataclasses import asdict, dataclass, fields, is_dataclass
+from typing import Any, ClassVar, Self, TypedDict
 
 
-T = TypeVar("T", bound="BaseModel")
+class BaseModelDict(TypedDict):
+    id: str
 
 
 @dataclass
@@ -19,32 +20,28 @@ class BaseModel:
     """
 
     id: str
-
     entity_name: ClassVar[str] = ""
 
     def validate(self) -> None:
-        """Override in subclasses for entity-specific validation."""
         if not isinstance(self.id, str) or not self.id.strip():
             raise ValueError("id must be a non-empty string")
 
-    def to_dict(self) -> Dict[str, Any]:
-        """Serialize the dataclass to a plain dict."""
+    def to_dict(self) -> dict[str, Any]:
+        if not is_dataclass(self):
+            raise TypeError("BaseModel subclasses must be dataclasses")
         return asdict(self)
 
     @classmethod
-    def from_dict(cls: Type[T], data: Dict[str, Any]) -> T:
-        """
-        Create an instance from a dict.
-
-        This method ignores unknown keys and relies on dataclass defaults
-        for missing optional fields.
-        """
+    def from_dict(cls, data: dict[str, Any]) -> Self:
         if not isinstance(data, dict):
             raise ValueError("data must be a dict")
 
-        allowed = {f.name for f in fields(cls)}
-        filtered = {k: v for k, v in data.items() if k in allowed}
+        if not is_dataclass(cls):
+            raise TypeError("BaseModel subclasses must be dataclasses")
 
-        obj = cls(**filtered)  # type: ignore[arg-type]
+        allowed: set[str] = {f.name for f in fields(cls)}
+        filtered: dict[str, Any] = {k: v for k, v in data.items() if k in allowed}
+
+        obj = cls(**filtered)
         obj.validate()
         return obj
