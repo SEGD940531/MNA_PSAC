@@ -1,0 +1,3 @@
+[MASTER]
+max-line-length=88
+disable=C0114,C0115,C0116,invalid-name,missing-module-docstring

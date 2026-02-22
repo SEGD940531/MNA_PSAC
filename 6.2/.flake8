@@ -1,0 +1,15 @@
+[flake8]
+max-line-length = 100
+exclude =
+    .venv,
+    .pytest_cache,
+    __pycache__,
+    logs,
+    output,
+    docs
+
+# Opcional: si usas Black, normalmente se recomienda ignorar E203 y W503.
+extend-ignore = E203, W503
+
+# Si quieres que también revise complejidad (McCabe):
+max-complexity = 10
