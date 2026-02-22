@@ -1,19 +1,18 @@
-import unittest
-import tempfile
 import os
+import tempfile
+import unittest
+from dataclasses import dataclass
 
-from persistence.repository import Repository
 from persistence.model import BaseModel
+from persistence.repository import Repository
 
 
+@dataclass
 class DummyModel(BaseModel):
     entity_name = "dummy"
+    name: str = ""
 
-    def __init__(self, id, name):
-        super().__init__(id=id)
-        self.name = name
-
-    def validate(self):
+    def validate(self) -> None:
         super().validate()
         if not self.name:
             raise ValueError("name required")
@@ -75,8 +74,7 @@ class TestRepository(unittest.TestCase):
             self.repo.update(DummyModel(id="999", name="x"))
 
     def test_invalid_data_in_file(self):
-        # simulate corrupt data
-        with open(self.file_path, "w") as f:
+        with open(self.file_path, "w", encoding="utf-8") as f:
             f.write("invalid json")
 
         results = self.repo.all()

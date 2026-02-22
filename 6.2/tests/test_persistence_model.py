@@ -1,15 +1,15 @@
 import unittest
+from dataclasses import dataclass
+
 from persistence.model import BaseModel
 
 
+@dataclass
 class DummyModel(BaseModel):
     entity_name = "dummy"
+    name: str = ""
 
-    def __init__(self, id, name):
-        super().__init__(id=id)
-        self.name = name
-
-    def validate(self):
+    def validate(self) -> None:
         super().validate()
         if not self.name:
             raise ValueError("name required")
@@ -35,5 +35,6 @@ class TestBaseModel(unittest.TestCase):
             DummyModel.from_dict(data)
 
     def test_invalid_id(self):
+        obj = DummyModel(id="", name="test")
         with self.assertRaises(ValueError):
-            DummyModel(id=None, name="test")
+            obj.validate()
