@@ -15,4 +15,4 @@ __pycache__/
 .vscode/
 .idea/
 
-6.2/.env
+**/.env
