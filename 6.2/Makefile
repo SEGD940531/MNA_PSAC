@@ -1,7 +1,7 @@
 PYTHON := python3
 VENV := .venv
-PIP := $(VENV)/bin/pip
 PY := $(VENV)/bin/python
+PIP := $(PY) -m pip
 
 # CLI entrypoint
 ENTRY := src/cli/main.py
@@ -15,17 +15,18 @@ LINTLOGDIR := $(LOGDIR)/lint
 
 TIMESTAMP := $(shell date +"%Y%m%d_%H%M%S")
 
-.PHONY: help venv install logs run test lint pylint format clean
+.PHONY: help venv install reinstall logs run test lint pylint format clean
 
 help:
 	@echo "Targets:"
-	@echo "  make install   Create venv and install deps"
-	@echo "  make run       Run CLI (logs saved)"
-	@echo "  make test      Run unit tests with unittest (logs saved)"
-	@echo "  make lint      Run flake8 checks (PEP8)"
-	@echo "  make pylint    Run pylint checks"
-	@echo "  make format    Auto-format with black"
-	@echo "  make clean     Clean environment and generated files"
+	@echo "  make install     Create venv and install deps"
+	@echo "  make reinstall   Recreate venv from scratch"
+	@echo "  make run         Run CLI (logs saved)"
+	@echo "  make test        Run unit tests with unittest (logs saved)"
+	@echo "  make lint        Run flake8 checks (PEP8)"
+	@echo "  make pylint      Run pylint checks"
+	@echo "  make format      Auto-format with black"
+	@echo "  make clean       Clean environment and generated files"
 
 venv:
 	$(PYTHON) -m venv $(VENV)
@@ -33,6 +34,10 @@ venv:
 install: venv
 	$(PIP) install --upgrade pip
 	$(PIP) install -r requirements.txt
+
+reinstall:
+	rm -rf $(VENV)
+	$(MAKE) install
 
 logs:
 	mkdir -p $(TESTLOGDIR)
@@ -74,7 +79,7 @@ lint: install logs
 	STDERR="$(LINTLOGDIR)/flake8_$(TIMESTAMP).stderr.log"; \
 	echo "Running flake8..."; \
 	set +e; \
-	$(PY) -m flake8 src tests 1> $$STDOUT 2> $$STDERR; \
+	PYTHONPATH=src $(PY) -m flake8 src tests 1> $$STDOUT 2> $$STDERR; \
 	EC=$$?; \
 	set -e; \
 	echo "Flake8 logs:"; \

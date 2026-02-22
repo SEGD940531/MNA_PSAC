@@ -1,9 +1,0 @@
-src/computeSales.py:13:1: F401 'typing.Dict' imported but unused
-src/computeSales.py:192:29: W292 no newline at end of file
-src/compute_sales/__init__.py:1:1: F401 '.main.compute_sales' imported but unused
-src/compute_sales/__init__.py:1:32: W292 no newline at end of file
-src/compute_sales/main.py:96:26: W292 no newline at end of file
-tests/test_compute_sales.py:30:101: E501 line too long (104 > 100 characters)
-tests/test_compute_sales.py:31:101: E501 line too long (104 > 100 characters)
-tests/test_compute_sales.py:32:101: E501 line too long (104 > 100 characters)
-tests/test_compute_sales.py:42:39: W292 no newline at end of file

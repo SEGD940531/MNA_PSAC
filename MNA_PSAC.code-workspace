@@ -1,0 +1,9 @@
+{
+  "folders": [
+    { "path": "5.2" },
+    { "path": "6.2" }
+  ],
+  "settings": {
+    "python-envs.defaultEnvManager": "ms-python.python:pyenv"
+  }
+}

@@ -1,0 +1,101 @@
+test_from_dict_valid (test_persistence_model.TestBaseModel.test_from_dict_valid) ... ERROR
+test_invalid_id (test_persistence_model.TestBaseModel.test_invalid_id) ... FAIL
+test_to_dict (test_persistence_model.TestBaseModel.test_to_dict) ... ERROR
+test_validation_error (test_persistence_model.TestBaseModel.test_validation_error) ... ERROR
+test_create_and_get (test_persistence_repository.TestRepository.test_create_and_get) ... ERROR
+test_delete (test_persistence_repository.TestRepository.test_delete) ... ok
+test_delete_non_existing (test_persistence_repository.TestRepository.test_delete_non_existing) ... ok
+test_duplicate_id (test_persistence_repository.TestRepository.test_duplicate_id) ... ok
+test_get_all (test_persistence_repository.TestRepository.test_get_all) ... ERROR
+test_invalid_data_in_file (test_persistence_repository.TestRepository.test_invalid_data_in_file) ... ok
+test_update (test_persistence_repository.TestRepository.test_update) ... ERROR
+test_update_non_existing (test_persistence_repository.TestRepository.test_update_non_existing) ... ok
+test_validation_on_create (test_persistence_repository.TestRepository.test_validation_on_create) ... ok
+test_file_not_exists (test_persistence_storage.TestJSONStorage.test_file_not_exists) ... ok
+test_invalid_json_handled (test_persistence_storage.TestJSONStorage.test_invalid_json_handled) ... ok
+test_overwrite_data (test_persistence_storage.TestJSONStorage.test_overwrite_data) ... ok
+test_read_empty_file (test_persistence_storage.TestJSONStorage.test_read_empty_file) ... ok
+test_write_and_read (test_persistence_storage.TestJSONStorage.test_write_and_read) ... ok
+
+======================================================================
+ERROR: test_from_dict_valid (test_persistence_model.TestBaseModel.test_from_dict_valid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/tests/test_persistence_model.py", line 28, in test_from_dict_valid
+    obj = DummyModel.from_dict(data)
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/src/persistence/model.py", line 48, in from_dict
+    obj = cls(**filtered)  # type: ignore[arg-type]
+TypeError: DummyModel.__init__() missing 1 required positional argument: 'name'
+
+======================================================================
+ERROR: test_to_dict (test_persistence_model.TestBaseModel.test_to_dict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/tests/test_persistence_model.py", line 24, in test_to_dict
+    self.assertEqual(result["name"], "test")
+                     ~~~~~~^^^^^^^^
+KeyError: 'name'
+
+======================================================================
+ERROR: test_validation_error (test_persistence_model.TestBaseModel.test_validation_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/tests/test_persistence_model.py", line 35, in test_validation_error
+    DummyModel.from_dict(data)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/src/persistence/model.py", line 48, in from_dict
+    obj = cls(**filtered)  # type: ignore[arg-type]
+TypeError: DummyModel.__init__() missing 1 required positional argument: 'name'
+
+======================================================================
+ERROR: test_create_and_get (test_persistence_repository.TestRepository.test_create_and_get)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/tests/test_persistence_repository.py", line 36, in test_create_and_get
+    result = self.repo.get("1")
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/src/persistence/repository.py", line 64, in get
+    return self.model_cls.from_dict(rec)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/src/persistence/model.py", line 48, in from_dict
+    obj = cls(**filtered)  # type: ignore[arg-type]
+TypeError: DummyModel.__init__() missing 1 required positional argument: 'name'
+
+======================================================================
+ERROR: test_get_all (test_persistence_repository.TestRepository.test_get_all)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/tests/test_persistence_repository.py", line 44, in test_get_all
+    results = self.repo.all()
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/src/persistence/repository.py", line 51, in all
+    items.append(self.model_cls.from_dict(rec))
+                 ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/src/persistence/model.py", line 48, in from_dict
+    obj = cls(**filtered)  # type: ignore[arg-type]
+TypeError: DummyModel.__init__() missing 1 required positional argument: 'name'
+
+======================================================================
+ERROR: test_update (test_persistence_repository.TestRepository.test_update)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/tests/test_persistence_repository.py", line 60, in test_update
+    result = self.repo.get("1")
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/src/persistence/repository.py", line 64, in get
+    return self.model_cls.from_dict(rec)
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/src/persistence/model.py", line 48, in from_dict
+    obj = cls(**filtered)  # type: ignore[arg-type]
+TypeError: DummyModel.__init__() missing 1 required positional argument: 'name'
+
+======================================================================
+FAIL: test_invalid_id (test_persistence_model.TestBaseModel.test_invalid_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/tests/test_persistence_model.py", line 38, in test_invalid_id
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.010s
+
+FAILED (failures=1, errors=6)
