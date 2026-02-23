@@ -1,0 +1,31 @@
+src/cli/main.py:12:101: E501 line too long (108 > 100 characters)
+src/cli/main.py:16:101: E501 line too long (111 > 100 characters)
+src/cli/main.py:57:1: C901 '_execute' is too complex (28)
+src/cli/main.py:267:11: W292 no newline at end of file
+src/persistence/__init__.py:15:53: W292 no newline at end of file
+src/persistence/model.py:47:19: W292 no newline at end of file
+src/persistence/repository.py:107:40: W292 no newline at end of file
+src/persistence/storage_json.py:81:76: W292 no newline at end of file
+src/reservation/__init__.py:12:69: W292 no newline at end of file
+src/reservation/main.py:3:1: F401 '.service.ReservationService' imported but unused
+src/reservation/main.py:13:11: W292 no newline at end of file
+src/reservation/models.py:103:101: E501 line too long (113 > 100 characters)
+src/reservation/models.py:104:92: W292 no newline at end of file
+src/reservation/service.py:148:101: E501 line too long (104 > 100 characters)
+src/reservation/service.py:228:46: W292 no newline at end of file
+src/tui/__init__.py:3:22: W292 no newline at end of file
+src/tui/app.py:2:1: F401 'os' imported but unused
+src/tui/app.py:3:1: F401 'shlex' imported but unused
+src/tui/app.py:4:1: F401 'typing.Optional' imported but unused
+src/tui/app.py:97:101: E501 line too long (101 > 100 characters)
+src/tui/app.py:130:101: E501 line too long (105 > 100 characters)
+src/tui/app.py:134:101: E501 line too long (105 > 100 characters)
+src/tui/app.py:265:101: E501 line too long (106 > 100 characters)
+src/tui/app.py:326:1: C901 'run_tui' is too complex (23)
+src/tui/app.py:450:33: W292 no newline at end of file
+src/tui/main.py:13:11: W292 no newline at end of file
+tests/test_persistence_model.py:40:27: W292 no newline at end of file
+tests/test_persistence_repository.py:85:58: W292 no newline at end of file
+tests/test_persistence_storage.py:4:1: F401 'json' imported but unused
+tests/test_persistence_storage.py:46:47: W292 no newline at end of file
+tests/test_reservation_service.py:133:37: W292 no newline at end of file

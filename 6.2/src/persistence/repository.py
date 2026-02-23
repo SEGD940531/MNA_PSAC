@@ -74,7 +74,9 @@ class Repository(Generic[T]):
         index = self._index_by_id(records)
 
         if obj.id in index:
-            raise ValueError(f"{self.model_cls.__name__} with id '{obj.id}' already exists")
+            raise ValueError(
+                f"{self.model_cls.__name__} with id '{obj.id}' already exists"
+            )
 
         records.append(obj.to_dict())
         self._dump_all_raw(records)
@@ -92,7 +94,9 @@ class Repository(Generic[T]):
                 break
 
         if not updated:
-            raise ValueError(f"{self.model_cls.__name__} with id '{obj.id}' does not exist")
+            raise ValueError(
+                f"{self.model_cls.__name__} with id '{obj.id}' does not exist"
+            )
 
         self._dump_all_raw(records)
 
@@ -101,7 +105,9 @@ class Repository(Generic[T]):
             raise ValueError("entity_id must be a non-empty string")
 
         records = self._load_all_raw()
-        new_records: list[Record] = [rec for rec in records if rec.get("id") != entity_id]
+        new_records: list[Record] = [
+            rec for rec in records if rec.get("id") != entity_id
+        ]
 
         # Deleting a non-existing id is not an error: keep execution going.
         self._dump_all_raw(new_records)

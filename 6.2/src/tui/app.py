@@ -1,7 +1,5 @@
 import curses
-import os
-import shlex
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from reservation import ReservationService
 
@@ -20,6 +18,7 @@ def _to_int(value: str, default: int = 0) -> int:
 # -------------------------
 # Loaders
 # -------------------------
+
 
 def _load_reservations(svc: ReservationService) -> List[Dict[str, Any]]:
     items = svc.reservations.all()
@@ -47,6 +46,7 @@ def _load_items(svc: ReservationService, view: str) -> List[Dict[str, Any]]:
 # -------------------------
 # UI
 # -------------------------
+
 
 def _draw(
     stdscr,
@@ -94,8 +94,11 @@ def _draw(
             cid = _safe_str(item.get("customer_id"))
             rooms = _safe_str(item.get("rooms"))
             status_txt = _safe_str(item.get("status"))
-            line = f"{idx+1:>3}. {rid}  hotel={hid} customer={cid} rooms={rooms} status={status_txt}"
-
+            line = (
+                f"{idx+1:>3}. {rid}  "
+                f"hotel={hid} customer={cid} "
+                f"rooms={rooms} status={status_txt}"
+            )
         elif view == "hotels":
             hid = _safe_str(item.get("id"))
             name = _safe_str(item.get("name"))
@@ -123,15 +126,18 @@ def _draw(
     # Footer help
     if view == "reservations":
         help_line = (
-            "UP/DOWN move | Enter view | n new | c cancel | r refresh | 1/2/3 switch | q quit"
+            "UP/DOWN move | Enter view | n new | c cancel | "
+            "r refresh | 1/2/3 switch | q quit"
         )
     elif view == "hotels":
         help_line = (
-            "UP/DOWN move | Enter view | n new | u update | d delete | r refresh | 1/2/3 switch | q quit"
+            "UP/DOWN move | Enter view | n new | u update | "
+            "d delete | r refresh | 1/2/3 switch | q quit"
         )
     else:
         help_line = (
-            "UP/DOWN move | Enter view | n new | u update | d delete | r refresh | 1/2/3 switch | q quit"
+            "UP/DOWN move | Enter view | n new | u update | "
+            "d delete | r refresh | 1/2/3 switch | q quit"
         )
 
     stdscr.addstr(h - 2, 0, help_line[: w - 1])
@@ -202,6 +208,7 @@ def _details_lines(view: str, item: Dict[str, Any]) -> List[str]:
 # Actions
 # -------------------------
 
+
 def _create_reservation(stdscr, svc: ReservationService) -> str:
     customer_id = _prompt(stdscr, "customer-id: ")
     hotel_id = _prompt(stdscr, "hotel-id: ")
@@ -210,7 +217,9 @@ def _create_reservation(stdscr, svc: ReservationService) -> str:
     if rooms <= 0:
         return "Invalid rooms (must be positive int)"
 
-    res = svc.create_reservation(customer_id=customer_id, hotel_id=hotel_id, rooms=rooms)
+    res = svc.create_reservation(
+        customer_id=customer_id, hotel_id=hotel_id, rooms=rooms
+    )
     if res is None:
         return "Create reservation FAILED"
     return f"Created reservation {res.id}"
@@ -252,7 +261,9 @@ def _update_hotel(stdscr, svc: ReservationService, hid: str) -> str:
     name = _prompt(stdscr, f"name [{current.name}]: ")
     location = _prompt(stdscr, f"location [{current.location}]: ")
     total_rooms_str = _prompt(stdscr, f"total-rooms [{current.total_rooms}]: ")
-    available_rooms_str = _prompt(stdscr, f"available-rooms [{current.available_rooms}]: ")
+    available_rooms_str = _prompt(
+        stdscr, f"available-rooms [{current.available_rooms}]: "
+    )
 
     changes: Dict[str, Any] = {}
     if name.strip():
@@ -260,9 +271,13 @@ def _update_hotel(stdscr, svc: ReservationService, hid: str) -> str:
     if location.strip():
         changes["location"] = location.strip()
     if total_rooms_str.strip():
-        changes["total_rooms"] = _to_int(total_rooms_str.strip(), default=current.total_rooms)
+        changes["total_rooms"] = _to_int(
+            total_rooms_str.strip(), default=current.total_rooms
+        )
     if available_rooms_str.strip():
-        changes["available_rooms"] = _to_int(available_rooms_str.strip(), default=current.available_rooms)
+        changes["available_rooms"] = _to_int(
+            available_rooms_str.strip(), default=current.available_rooms
+        )
 
     ok = svc.update_hotel(hid, **changes)
     return "Updated hotel" if ok else "Update hotel FAILED"
@@ -322,6 +337,7 @@ def _delete_customer(stdscr, svc: ReservationService, cid: str) -> str:
 # -------------------------
 # Entrypoint
 # -------------------------
+
 
 def run_tui(base_dir: str) -> int:
     svc = ReservationService(base_dir=base_dir)
@@ -385,7 +401,9 @@ def run_tui(base_dir: str) -> int:
                 if not items:
                     status = "No items"
                     continue
-                _view_details(stdscr, f"Details ({view})", _details_lines(view, items[selected]))
+                _view_details(
+                    stdscr, f"Details ({view})", _details_lines(view, items[selected])
+                )
                 status = "Ready"
                 continue
 

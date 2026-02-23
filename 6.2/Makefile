@@ -18,7 +18,7 @@ LINTLOGDIR := $(LOGDIR)/lint
 
 TIMESTAMP := $(shell date +"%Y%m%d_%H%M%S")
 
-.PHONY: help venv install reinstall logs store run test lint pylint format clean
+.PHONY: help venv install reinstall logs store run tui test lint pylint format clean
 
 help:
 	@echo "Targets:"
@@ -26,6 +26,7 @@ help:
 	@echo "  make reinstall               Recreate venv from scratch"
 	@echo "  make store                   Create storage dir ($(STORAGE_DIR))"
 	@echo "  make run ARGS='...'          Run CLI (logs saved). If ARGS is empty, runs interactive shell."
+	@echo "  make tui                     Run TUI interface"
 	@echo "  make test                    Run unit tests with unittest (logs saved)"
 	@echo "  make lint                    Run flake8 checks (PEP8)"
 	@echo "  make pylint                  Run pylint checks"
@@ -70,6 +71,10 @@ run: install logs store
 	echo "  $$STDOUT"; \
 	echo "  $$STDERR"; \
 	exit $$EC
+
+tui: install store
+	@echo "Running TUI: -m tui.main"; \
+	PYTHONPATH=src STORAGE_DIR="$(STORAGE_DIR)" $(PY) -m tui.main
 
 test: install logs
 	@set -e; \

@@ -1,7 +1,6 @@
 import unittest
 import tempfile
 import os
-import json
 
 from persistence.storage_json import JSONStorage
 

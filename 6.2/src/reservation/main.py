@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from .service import ReservationService
-
 
 def main() -> None:
     # Minimal placeholder: wire paths from CLI layer later.

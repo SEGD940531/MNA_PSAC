@@ -123,7 +123,9 @@ class ReservationService:
         try:
             current = self.customers.get(customer_id)
             if current is None:
-                print(f"[ERROR] update_customer failed: customer '{customer_id}' not found")
+                print(
+                    f"[ERROR] update_customer failed: customer '{customer_id}' not found"
+                )
                 return False
 
             updated = replace(
@@ -145,16 +147,22 @@ class ReservationService:
     # -------------------------
     # Reservation operations
     # -------------------------
-    def create_reservation(self, customer_id: str, hotel_id: str, rooms: int = 1) -> Reservation | None:
+    def create_reservation(
+        self, customer_id: str, hotel_id: str, rooms: int = 1
+    ) -> Reservation | None:
         try:
             customer = self.customers.get(customer_id)
             if customer is None:
-                print(f"[ERROR] create_reservation failed: customer '{customer_id}' not found")
+                print(
+                    f"[ERROR] create_reservation failed: customer '{customer_id}' not found"
+                )
                 return None
 
             hotel = self.hotels.get(hotel_id)
             if hotel is None:
-                print(f"[ERROR] create_reservation failed: hotel '{hotel_id}' not found")
+                print(
+                    f"[ERROR] create_reservation failed: hotel '{hotel_id}' not found"
+                )
                 return None
 
             if not isinstance(rooms, int) or rooms <= 0:
@@ -166,7 +174,9 @@ class ReservationService:
                 return None
 
             # Decrease availability
-            updated_hotel = replace(hotel, available_rooms=hotel.available_rooms - rooms)
+            updated_hotel = replace(
+                hotel, available_rooms=hotel.available_rooms - rooms
+            )
             updated_hotel.validate()
             self.hotels.update(updated_hotel)
 
@@ -191,7 +201,9 @@ class ReservationService:
             res = self.reservations.get(reservation_id)
             if res is None:
                 # Not an error per requirement: continue execution
-                print(f"[ERROR] cancel_reservation: reservation '{reservation_id}' not found")
+                print(
+                    f"[ERROR] cancel_reservation: reservation '{reservation_id}' not found"
+                )
                 return False
 
             if res.status == "canceled":

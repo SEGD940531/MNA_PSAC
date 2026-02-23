@@ -100,5 +100,9 @@ class Reservation(BaseModel):
         if not isinstance(self.created_at, str) or not self.created_at.strip():
             raise ValueError("reservation.created_at must be a non-empty string")
 
-        if self.status == "canceled" and (not isinstance(self.canceled_at, str) or not self.canceled_at.strip()):
-            raise ValueError("reservation.canceled_at is required when status is canceled")
+        if self.status == "canceled" and (
+            not isinstance(self.canceled_at, str) or not self.canceled_at.strip()
+        ):
+            raise ValueError(
+                "reservation.canceled_at is required when status is canceled"
+            )

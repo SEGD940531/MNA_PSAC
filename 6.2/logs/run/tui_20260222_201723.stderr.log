@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/Users/me/.pyenv/versions/3.13.0/lib/python3.13/curses/__init__.py", line 78, in wrapper
+    cbreak()
+    ~~~~~~^^
+_curses.error: cbreak() returned ERR
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/src/tui/main.py", line 13, in <module>
+    main()
+    ~~~~^^
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/src/tui/main.py", line 9, in main
+    sys.exit(run_tui(base_dir))
+             ~~~~~~~^^^^^^^^^^
+  File "/Users/me/Public/MNA/Pruebas de software y aseguramiento de la calidad/4.2 Ejercicio de programación 1/repositories/MNA_PSAC/6.2/src/tui/app.py", line 458, in run_tui
+    return curses.wrapper(_main)
+           ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/me/.pyenv/versions/3.13.0/lib/python3.13/curses/__init__.py", line 100, in wrapper
+    nocbreak()
+    ~~~~~~~~^^
+_curses.error: nocbreak() returned ERR

@@ -103,7 +103,9 @@ class TestReservationService(unittest.TestCase):
         stored = self.svc.get_reservation(res.id)
         self.assertIsNotNone(stored)
         self.assertEqual(stored.status, "canceled")
-        self.assertTrue(isinstance(stored.canceled_at, str) and stored.canceled_at.strip())
+        self.assertTrue(
+            isinstance(stored.canceled_at, str) and stored.canceled_at.strip()
+        )
 
     def test_create_reservation_not_enough_rooms(self):
         res = self.svc.create_reservation(customer_id="c1", hotel_id="h1", rooms=99)

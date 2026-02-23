@@ -7,9 +7,37 @@ David A. Serrano Garcia
 Matrícula: A01795935  
 Correo: a01795935@tec.mx
 
+
 ---
 
-   ![Catálogo de reservaciones](docs/media/image.png)
+
+## Quick Start
+
+Ejecuta el proyecto en 3 pasos simples:
+
+### 1. Instalar dependencias
+
+```
+make install
+```
+
+### 2. Crear almacenamiento
+
+```
+make store
+```
+
+### 3. Ejecutar
+
+
+TUI (interfaz visual):
+
+```
+make tui
+```
+
+![Catálogo de reservaciones](docs/media/image.png)
+
 ---
 
 ## Estrategia de desarrollo

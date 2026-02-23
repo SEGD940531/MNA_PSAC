@@ -9,11 +9,13 @@ from reservation import ReservationService
 def _print_help() -> None:
     print(
         "\nCommands:\n"
-        "  hotels create --id <id> --name <name> --location <loc> --total-rooms <n> --available-rooms <n>\n"
+        "  hotels create --id <id> --name <name> --location <loc> "
+        "--total-rooms <n> --available-rooms <n>\n"
         "  hotels display --id <id>\n"
         "  hotels list\n"
         "  hotels delete --id <id>\n"
-        "  hotels update --id <id> [--name ...] [--location ...] [--total-rooms ...] [--available-rooms ...]\n"
+        "  hotels update --id <id> [--name ...] [--location ...] "
+        "[--total-rooms ...] [--available-rooms ...]\n"
         "\n"
         "  customers create --id <id> --name <name> --email <email>\n"
         "  customers display --id <id>\n"
@@ -21,7 +23,8 @@ def _print_help() -> None:
         "  customers delete --id <id>\n"
         "  customers update --id <id> [--name ...] [--email ...]\n"
         "\n"
-        "  reservations create --customer-id <cid> --hotel-id <hid> --rooms <n>\n"
+        "  reservations create --customer-id <cid> --hotel-id <hid> "
+        "--rooms <n>\n"
         "  reservations display --id <id>\n"
         "  reservations list\n"
         "  reservations cancel --id <id>\n"
@@ -124,9 +127,13 @@ def _execute(argv: List[str], svc: ReservationService) -> int:
             if _has_flag(rest, "--location"):
                 changes["location"] = _get_flag_value(rest, "--location") or ""
             if _has_flag(rest, "--total-rooms"):
-                changes["total_rooms"] = _to_int(_get_flag_value(rest, "--total-rooms"), 0)
+                changes["total_rooms"] = _to_int(
+                    _get_flag_value(rest, "--total-rooms"), 0
+                )
             if _has_flag(rest, "--available-rooms"):
-                changes["available_rooms"] = _to_int(_get_flag_value(rest, "--available-rooms"), 0)
+                changes["available_rooms"] = _to_int(
+                    _get_flag_value(rest, "--available-rooms"), 0
+                )
 
             ok = svc.update_hotel(hid, **changes)
             print("OK" if ok else "FAILED")
