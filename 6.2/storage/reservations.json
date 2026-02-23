@@ -7,5 +7,14 @@
     "status": "active",
     "created_at": "2026-02-22T04:40:01.199789+00:00",
     "canceled_at": ""
+  },
+  {
+    "id": "884e50fd-b5eb-4346-bc79-5e49042f4aa8",
+    "hotel_id": "h2",
+    "customer_id": "c1",
+    "rooms": 2,
+    "status": "active",
+    "created_at": "2026-02-23T03:53:32.402107+00:00",
+    "canceled_at": ""
   }
 ]

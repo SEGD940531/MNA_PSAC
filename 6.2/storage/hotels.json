@@ -5,5 +5,12 @@
     "location": "City",
     "total_rooms": 3,
     "available_rooms": 1
+  },
+  {
+    "id": "h2",
+    "name": "TJ",
+    "location": "Tj",
+    "total_rooms": 10,
+    "available_rooms": 8
   }
 ]

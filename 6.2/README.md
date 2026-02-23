@@ -5,133 +5,204 @@ Pruebas de software y aseguramiento de la calidad (Gpo 10)
 
 David A. Serrano Garcia  
 Matrícula: A01795935  
-Correo: [a01795935@tec.mx](mailto:a01795935@tec.mx)
+Correo: a01795935@tec.mx
 
+---
+
+   ![Catálogo de reservaciones](docs/media/image.png)
 ---
 
 ## Estrategia de desarrollo
 
-> A continuación describo de forma breve la estrategia de desarrollo que seguí, la cual resume el flujo de trabajo aplicado en este proyecto.
-
-El desarrollo se realizó de forma incremental:
+El desarrollo se realizó de forma incremental, priorizando pruebas, desacoplamiento y trazabilidad:
 
 1. **Estructura base del proyecto**  
-   Primero se definió la estructura del proyecto ([`src/`](./src), [`tests/`](./tests), [`logs/`](./logs), [`data/`](./data), [`output/`](./output)) junto con el [`Makefile`](./Makefile) para poder ejecutar todo de forma consistente.
+   Se definió una estructura modular con separación clara de responsabilidades:
+   - `src/` código fuente
+   - `tests/` pruebas
+   - `logs/` evidencia de ejecución
+   - `storage/` persistencia de datos JSON
+   - `scripts/` automatización de ejemplos
+   - `Makefile` para ejecución estandarizada
 
-2. **Pruebas antes de la implementación**  
-   Se crearon los tests en [`tests/test_compute_sales.py`](./tests/test_compute_sales.py) utilizando los resultados esperados en [`tests/expected/Results.txt`](./tests/expected/Results.txt), aun sin tener la lógica completa, para definir el comportamiento esperado.  
-   En los logs de pruebas ([`logs/test/`](./logs/test/)) se pueden ver ejecuciones iniciales con tests fallidos y posteriormente ejecuciones exitosas conforme se fue implementando la lógica.
+2. **Diseño de capa de persistencia**  
+   Se implementó un paquete reusable `persistence/`:
+   - `BaseModel`: validación y serialización
+   - `JSONStorage`: lectura/escritura defensiva de archivos JSON
+   - `Repository`: CRUD genérico desacoplado del dominio
 
-3. **Lógica desacoplada en paquete**  
-   La lógica se implementó en el paquete [`src/compute_sales/`](./src/compute_sales/) (principalmente en [`main.py`](./src/compute_sales/main.py)) como función independiente.  
-   La idea de esta separación fue aislar la lógica core del programa del manejo de CLI y de archivos, de modo que la lógica sea reutilizable, fácil de probar y no dependa de la entrada/salida.
+3. **Desarrollo guiado por pruebas (TDD parcial)**  
+   Se implementaron pruebas antes y durante la lógica:
+   - `test_persistence_model.py`
+   - `test_persistence_storage.py`
+   - `test_persistence_repository.py`
+   - `test_reservation_service.py`
 
-4. **Implementación del CLI**  
-   Se creó el entrypoint [`src/computeSales.py`](./src/computeSales.py), encargado de la lectura de archivos, validación de datos, medición de tiempo y generación del archivo de resultados [`output/SalesResults.txt`](./output/SalesResults.txt).
+   Los logs de ejecución se almacenan en `logs/test/` como evidencia.
 
-5. **Calidad de código (PEP8)**  
-   Se utilizaron herramientas como `flake8`, registrando resultados en [`logs/lint/`](./logs/lint/) y ajustando el código con base en sus reportes.
+4. **Lógica de negocio desacoplada**  
+   Se creó el paquete `reservation/` que encapsula:
+   - Entidades: `Hotel`, `Customer`, `Reservation`
+   - Servicio: `ReservationService`
 
-6. **Registro de ejecución**  
-   Todas las ejecuciones generan evidencia en logs:
-   - Ejecución del programa: [`logs/run/`](./logs/run/)  
-   - Pruebas: [`logs/test/`](./logs/test/)  
-   - Análisis estático: [`logs/lint/`](./logs/lint/)
+   Toda la lógica de negocio se implementa en el servicio, sin dependencias del CLI.
+
+5. **CLI desacoplado**  
+   Se implementó un CLI en `src/cli/main.py` que:
+   - Interpreta comandos
+   - Invoca `ReservationService`
+   - Soporta modo interactivo (shell)
+
+6. **Automatización y ejecución reproducible**  
+   El `Makefile` centraliza:
+   - instalación
+   - ejecución
+   - pruebas
+   - lint
+   - logs con timestamp
+
+7. **Calidad de código**  
+   Se utilizaron herramientas:
+   - flake8
+   - pylint
+   - black
+
+   Los resultados se almacenan en `logs/lint/`.
 
 ---
 
 ## Descripción
 
-Programa CLI en Python que calcula el total de ventas a partir de:
+Sistema CLI en Python para la gestión de:
 
-- Catálogo de precios (JSON)
-- Registro de ventas (JSON)
+- Hoteles
+- Clientes
+- Reservaciones
 
-Genera salida en consola y en archivo.
+Persistencia basada en archivos JSON, con manejo defensivo de errores.
+
+Incluye:
+- CRUD de entidades
+- Validaciones de dominio
+- Manejo de disponibilidad de habitaciones
+- Cancelación de reservaciones
+- Logs de ejecución
 
 ---
 
 ## Estructura
 
 ```
-5.2/
+6.2/
 ├── Makefile
+├── scripts/
+│   └── run_examples.sh
+├── storage/
+│   ├── hotels.json
+│   ├── customers.json
+│   └── reservations.json
 ├── src/
-│   ├── computeSales.py
-│   └── compute_sales/
-│       ├── __init__.py
-│       └── main.py
-├── data/
-│   ├── priceCatalogue.json
-│   └── salesRecord.json
-├── output/
-│   └── SalesResults.txt
+│   ├── cli/
+│   │   └── main.py
+│   ├── persistence/
+│   │   ├── model.py
+│   │   ├── repository.py
+│   │   └── storage_json.py
+│   └── reservation/
+│       ├── service.py
+│       └── models (Hotel, Customer, Reservation)
+├── tests/
+│   ├── test_persistence_model.py
+│   ├── test_persistence_storage.py
+│   ├── test_persistence_repository.py
+│   └── test_reservation_service.py
 ├── logs/
 │   ├── run/
 │   ├── test/
 │   └── lint/
-└── tests/
-    ├── test_compute_sales.py
-    ├── fixtures/
-    └── expected/
+└── README.md
 ```
 
 ---
 
 ## Uso
 
-```
-python src/computeSales.py data/priceCatalogue.json data/salesRecord.json
-```
-
----
-
-## Makefile
-
-Instalar dependencias:
+### Instalación
 
 ```
 make install
 ```
 
-Ejecutar programa:
+---
+
+### Ejecución CLI
+
+Ejemplo:
+
+```
+make run ARGS="hotels create --id h1 --name 'Hotel A' --location City --total-rooms 3 --available-rooms 3"
+```
+
+Otros ejemplos:
+
+```
+make run ARGS="customers create --id c1 --name Alice --email alice@example.com"
+
+make run ARGS="reservations create --customer-id c1 --hotel-id h1 --rooms 2"
+
+make run ARGS="reservations list"
+```
+
+---
+
+### Modo interactivo
+
+Si no se pasan argumentos:
 
 ```
 make run
 ```
 
-Ejecutar pruebas:
+Se abre un shell interactivo:
+
+```
+store> hotels list
+store> reservations create --customer-id c1 --hotel-id h1 --rooms 1
+store> exit
+```
+
+---
+
+### Script de ejemplos
+
+```
+./scripts/run_examples.sh
+```
+
+---
+
+## Pruebas
 
 ```
 make test
 ```
 
-Análisis estático:
+Incluye pruebas para:
 
-```
-make lint
-```
-
----
-
-## Requisitos cubiertos
-
-1. CLI con dos archivos  
-2. Salida en consola y archivo  
-3. Manejo de errores sin detener ejecución  
-4. Entry point: `computeSales.py`  
-5. Formato de ejecución estándar  
-6. Escalabilidad O(n) con búsqueda O(1)  
-7. Medición de tiempo de ejecución  
-8. Cumplimiento PEP8  
+- Modelos
+- Persistencia
+- Repositorios
+- Servicio de reservaciones
 
 ---
 
 ## Logs
 
-- Ejecución: `logs/run/`
-- Tests: `logs/test/`
-- Lint: `logs/lint/`
+Se generan logs con timestamp:
+
+- `logs/run/` ejecución del CLI
+- `logs/test/` pruebas
+- `logs/lint/` análisis estático
 
 Formato:
 
@@ -142,11 +213,65 @@ Formato:
 
 ---
 
-## Pruebas
+## Persistencia
 
-- Tests unitarios en `tests/`
-- Datos en `tests/fixtures/`
-- Resultados esperados en `tests/expected/`
+Los datos se almacenan en JSON dentro de `storage/`:
+
+- `hotels.json`
+- `customers.json`
+- `reservations.json`
+
+Se puede cambiar el directorio usando variable de entorno:
+
+```
+STORAGE_DIR=otro_dir make run
+```
+
+---
+
+## Manejo de errores
+
+El sistema es tolerante a errores:
+
+- JSON inválido no rompe la ejecución
+- registros inválidos se ignoran
+- operaciones inválidas regresan error controlado
+
+Ejemplos:
+
+- reservación sin cliente
+- reservación sin hotel
+- habitaciones insuficientes
+
+---
+
+## Diseño
+
+Arquitectura en capas:
+
+- `persistence`: acceso a datos
+- `reservation`: lógica de negocio
+- `cli`: interfaz de usuario
+
+Principios aplicados:
+
+- separación de responsabilidades
+- código testable
+- manejo defensivo
+- tipado con Python moderno (`list[str]`, `Self`, etc.)
+
+---
+
+## Requisitos cubiertos
+
+1. Diseño modular
+2. Uso de pruebas unitarias
+3. Persistencia en archivos
+4. CLI funcional
+5. Manejo de errores
+6. Logs de ejecución
+7. Código limpio y documentado
+8. Cumplimiento PEP8
 
 ---
 
@@ -158,18 +283,18 @@ Herramientas:
 - pylint
 - black
 
-Resultado:
+Resultados:
 
-- Score pylint: ~9+
-- Sin errores críticos
+- sin errores críticos
+- estructura mantenible
+- cobertura funcional validada por pruebas
 
 ---
 
-## Diseño
+## Notas
 
-- `compute_sales`: lógica pura (testable)
-- `computeSales.py`: CLI, IO, validación, logging
-- Manejo defensivo de errores
-- Reporte claro y legible
+- Los errores impresos en logs son esperados en escenarios de prueba
+- Los tests incluyen casos negativos para validar robustez
+- La capa de persistencia es reutilizable para otros proyectos
 
 ---
